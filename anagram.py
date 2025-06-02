@@ -60,13 +60,6 @@ for word in wordList:
 lengthFilteredWordList.remove("".join(anagram[0]))
 lengthFilteredWordList_Count = len(lengthFilteredWordList)
 
-time1 = timer()
-splitWordList = []
-for i in range(lengthFilteredWordList_Count):
-	splitWordList.append([list(lengthFilteredWordList[i]),0])
-
-splitWordList_count = len(splitWordList)
-
 # stamps = tomato
 letterScores2 = {'a':1,
 				'b':2,
@@ -122,20 +115,22 @@ letterScores3 ={'a':1,
 				'y':282429536481,
 				'z':847288609443}
 
-for i in range(splitWordList_count):
-    for j in range (len(splitWordList[i][0])):
-        try:
-            splitWordList[i][1] = splitWordList[i][1] + letterScores3[splitWordList[i][0][j]]	
-        except:
-            splitWordList[i][1] = 0
-	
+time1 = timer()
 for j in range(anagram_length):
 	anagram[1] = anagram[1] + letterScores3[anagram[0][j]]
-	
+
 anagramList = []
-for i in range(splitWordList_count):
-	if splitWordList[i][1] == anagram[1]:
-		anagramList.append("".join(splitWordList[i][0]))
+for i in range(lengthFilteredWordList_Count):
+	letters = list(lengthFilteredWordList[i])
+	score = 0
+	for j in range (anagram_length):
+		try:
+			score = score + letterScores3[letters[j]]
+		except:
+			score = 0
+
+	if score == anagram[1]:
+		anagramList.append(lengthFilteredWordList[i])
 
 time2 = timer()
 print("AnagramSolver: Numeric method \033[3m(took",str(round(((time2-time1)*1000),0))[:-2],"ms)\033[0m:")
